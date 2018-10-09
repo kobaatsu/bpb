@@ -1,4 +1,4 @@
 <template lang='pug'>
-  .about
-    h1 This is an about page
+  .batter
+    h1 野手
 </template>
