@@ -26,7 +26,7 @@ export default {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='stylus' scoped>
 text
   font-size 12px
   fill #000

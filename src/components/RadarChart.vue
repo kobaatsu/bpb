@@ -5,6 +5,7 @@
         :points='points'
       )
       circle(cx='100' cy='100' r='40')
+      circle(cx='100' cy='100' r='80')
       axis-label(
         v-for='(label, i) in labels'
         :key='i'
@@ -71,7 +72,7 @@ export default {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='stylus' scoped>
 polygon
   fill #42b983
   opacity .75

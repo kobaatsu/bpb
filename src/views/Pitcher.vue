@@ -481,7 +481,7 @@ export default {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='stylus' scoped>
   .alerts
     margin-bottom 30px
   .el-alert + .el-alert
