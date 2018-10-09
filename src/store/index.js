@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     PITCHER_SETTING,
     PITCHER_DATA: [],
-    PITCHER_ERROR: false
+    PITCHER_ERROR: true
   },
   mutations: {
     UPDATE_PITCHER_DATA (state, payload) {

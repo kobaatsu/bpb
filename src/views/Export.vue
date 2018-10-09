@@ -3,9 +3,18 @@
     el-input(
       v-if='!pitcherError'
       type='textarea'
-      autosize
       v-model='exportData'
+      readonly
+      autosize
     )
+    .alerts(v-if='pitcherError')
+      el-alert(
+        type='warning'
+        title='ピッチャーの設定が完了していません'
+        description='データを出力するには設定を完了する必要があります'
+        :closable="false"
+        show-icon
+      )
 </template>
 
 <script>
