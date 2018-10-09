@@ -242,7 +242,7 @@ export default {
         type: '',
         speed: this.pitcherSetting.speed.base,
         recovery: this.pitcherSetting.recovery.base,
-        average: '.' + this.pitcherSetting.average
+        average: this.pitcherSetting.average
       }
       this.pitcherParam.forEach(elm => {
         template[elm] = 'C'

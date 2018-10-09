@@ -32,3 +32,8 @@ export const pitchingForms = [
 ]
 
 export const pitchingTypes = ['A', 'A+', 'B', 'B+', 'C', 'D']
+
+export const exportLabels = {
+  header: ';--------------------------------------------------------------------',
+  pitcher: '; 投手             投 タ 球速 切 制 安 質 術 ス  回 指数'
+}
