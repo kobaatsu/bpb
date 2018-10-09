@@ -3,187 +3,230 @@
     .alerts(v-if='ruleErrors.length')
       el-alert(
         v-for='error in ruleErrors'
-        type='error'
+        type='warning'
         :title='error.title'
         :description='error.description'
+        :closable="false"
+        show-icon
       )
-    el-table(
-      :data='pitcherData'
-      stripe
-      style="width: 100%"
-    )
-      el-table-column(
-        fixed
-        label='名前'
-        width='200'
-      )
-        template(slot-scope='scope')
-          el-input(
-            v-model='scope.row.name'
-            @input='setPitcherData'
+
+    el-container
+      el-main
+        el-table(
+          :data='pitcherData'
+          stripe
+          style="width: 100%"
+        )
+          el-table-column(
+            fixed
+            prop='position'
+          )
+          el-table-column(
+            fixed
+            label='名前'
+            width='200'
+          )
+            template(slot-scope='scope')
+              el-input(
+                v-model='scope.row.name'
+                @input='setPitcherData'
+              )
+          el-table-column(
+            label='投法'
+            width='120'
+          )
+            template(slot-scope='scope')
+              el-select(
+                v-model='scope.row.form'
+                placeholder='--'
+                @change='setPitcherData'
+              )
+                el-option(
+                  v-for='(form, index) in pitchingForms'
+                  :key='index'
+                  :value='form.value'
+                  :label='form.label'
+                )
+          el-table-column(
+            label='タイプ'
+            width='120'
+          )
+            template(slot-scope='scope')
+              el-select(
+                v-model='scope.row.type'
+                placeholder='--'
+                @change='setPitcherData'
+              )
+                el-option(
+                  v-for='(type, index) in pitchingTypes'
+                  :key='index'
+                  :value='type'
+                  :label='type'
+                )
+
+          el-table-column(
+            label='球速'
+            width='200'
+          )
+            template(slot-scope='scope')
+              el-input-number(
+                v-model='scope.row.speed'
+                :step='pitcherSetting.speed.step'
+                :min='pitcherSetting.speed.base'
+                :max='pitcherSetting.speed.max'
+                @input='setPitcherData'
+              )
+          el-table-column(
+            label='切れ'
+            width='90'
+          )
+            template(slot-scope='scope')
+              el-select(
+                v-model='scope.row.sharpness'
+                placeholder='--'
+                @change='setPitcherData'
+              )
+                el-option(
+                  v-for='param in params'
+                  :key='param'
+                  :value='param'
+                  :label='param'
+                )
+          el-table-column(
+            label='制球'
+            width='90'
+          )
+            template(slot-scope='scope')
+              el-select(
+                v-model='scope.row.control'
+                placeholder='--'
+                @change='setPitcherData'
+              )
+                el-option(
+                  v-for='param in params'
+                  :key='param'
+                  :value='param'
+                  :label='param'
+                )
+          el-table-column(
+            label='安定'
+            width='90'
+          )
+            template(slot-scope='scope')
+              el-select(
+                v-model='scope.row.stability'
+                placeholder='--'
+                @change='setPitcherData'
+              )
+                el-option(
+                  v-for='param in params'
+                  :key='param'
+                  :value='param'
+                  :label='param'
+                )
+          el-table-column(
+            label='球質'
+            width='90'
+          )
+            template(slot-scope='scope')
+              el-select(
+                v-model='scope.row.characteristics'
+                placeholder='--'
+                @change='setPitcherData'
+              )
+                el-option(
+                  v-for='param in params'
+                  :key='param'
+                  :value='param'
+                  :label='param'
+                )
+          el-table-column(
+            label='投球術'
+            width='90'
+          )
+            template(slot-scope='scope')
+              el-select(
+                v-model='scope.row.skill'
+                placeholder='--'
+                @change='setPitcherData'
+              )
+                el-option(
+                  v-for='param in params'
+                  :key='param'
+                  :value='param'
+                  :label='param'
+                )
+          el-table-column(
+            label='スタミナ'
+            width='90'
+          )
+            template(slot-scope='scope')
+              el-select(
+                v-model='scope.row.stamina'
+                placeholder='--'
+                @change='setPitcherData'
+              )
+                el-option(
+                  v-for='param in params'
+                  :key='param'
+                  :value='param'
+                  :label='param'
+                )
+          el-table-column(
+            label='回復'
+            width='200'
+          )
+            template(slot-scope='scope')
+              el-input-number(
+                v-model='scope.row.recovery'
+                :step='pitcherSetting.recovery.step'
+                :min='pitcherSetting.recovery.base'
+                :max='pitcherSetting.recovery.max'
+                @input='setPitcherData'
+              )
+          el-table-column(
+            label='打率'
+            width='100'
+            prop='average'
           )
 
-      el-table-column(
-        fixed
-        label='タイプ'
-        width='120'
-      )
-        template(slot-scope='scope')
-          el-select(
-            v-model='scope.row.type'
-            placeholder='--'
-            @change='setPitcherData'
-          )
-            el-option(
-              v-for='(type, index) in pitcherTypes'
-              :key='index'
-              :value='index + 1'
-              :label='type'
-            )
-      el-table-column(
-        label='球速'
-        width='200'
-      )
-        template(slot-scope='scope')
-          el-input-number(
-            v-model='scope.row.speed'
-            :step='pitcherSetting.speed.step'
-            :min='pitcherSetting.speed.base'
-            :max='pitcherSetting.speed.max'
-            @input='setPitcherData'
-          )
-      el-table-column(
-        label='切れ'
-        width='90'
-      )
-        template(slot-scope='scope')
-          el-select(
-            v-model='scope.row.sharpness'
-            placeholder='--'
-            @change='setPitcherData'
-          )
-            el-option(
-              v-for='param in params'
-              :key='param'
-              :value='param'
-              :label='param'
-            )
-      el-table-column(
-        label='制球'
-        width='90'
-      )
-        template(slot-scope='scope')
-          el-select(
-            v-model='scope.row.control'
-            placeholder='--'
-            @change='setPitcherData'
-          )
-            el-option(
-              v-for='param in params'
-              :key='param'
-              :value='param'
-              :label='param'
-            )
-      el-table-column(
-        label='安定'
-        width='90'
-      )
-        template(slot-scope='scope')
-          el-select(
-            v-model='scope.row.stability'
-            placeholder='--'
-            @change='setPitcherData'
-          )
-            el-option(
-              v-for='param in params'
-              :key='param'
-              :value='param'
-              :label='param'
-            )
-      el-table-column(
-        label='球質'
-        width='90'
-      )
-        template(slot-scope='scope')
-          el-select(
-            v-model='scope.row.characteristics'
-            placeholder='--'
-            @change='setPitcherData'
-          )
-            el-option(
-              v-for='param in params'
-              :key='param'
-              :value='param'
-              :label='param'
-            )
-      el-table-column(
-        label='投球術'
-        width='90'
-      )
-        template(slot-scope='scope')
-          el-select(
-            v-model='scope.row.skill'
-            placeholder='--'
-            @change='setPitcherData'
-          )
-            el-option(
-              v-for='param in params'
-              :key='param'
-              :value='param'
-              :label='param'
-            )
-      el-table-column(
-        label='スタミナ'
-        width='90'
-      )
-        template(slot-scope='scope')
-          el-select(
-            v-model='scope.row.stamina'
-            placeholder='--'
-            @change='setPitcherData'
-          )
-            el-option(
-              v-for='param in params'
-              :key='param'
-              :value='param'
-              :label='param'
-            )
-      el-table-column(
-        label='回復'
-        width='200'
-      )
-        template(slot-scope='scope')
-          el-input-number(
-            v-model='scope.row.recovery'
-            :step='pitcherSetting.recovery.step'
-            :min='pitcherSetting.recovery.base'
-            :max='pitcherSetting.recovery.max'
-            @input='setPitcherData'
-          )
-    el-row(
-      :style='{"marginTop": "50px"}'
-      :gutter="10"
-    )
-      el-button(
-        type='danger'
-        icon='el-icon-delete'
-        @click='formatMembers'
-      ) データを初期化する
+        el-row(
+          :style='{"marginTop": "50px"}'
+          :gutter="10"
+        )
+          el-button(
+            type='danger'
+            icon='el-icon-delete'
+            @click='formatMembers'
+          ) データを初期化する
+
+      el-aside(width='200px')
+        rader-chart(
+          :score='score'
+        )
+
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 
-import { params, pitcherTypes, pitcherParam } from '@/constants/'
+import { params, pitcherPosition, pitchingForms, pitchingTypes, pitcherParam } from '@/constants/'
 import { randName } from '@/utility.js'
+
+import RaderChart from '@/components/RadarChart'
 
 export default {
   name: 'Pitcher',
+  components: {
+    RaderChart
+  },
   data () {
     return {
       pitcherData: [],
-      pitcherTypes,
+      pitcherPosition,
       params,
+      pitchingForms,
+      pitchingTypes,
       pitcherParam
     }
   },
@@ -194,9 +237,12 @@ export default {
     dataTemplate () {
       let template = {
         name: '',
+        position: null,
+        form: '',
         type: '',
         speed: this.pitcherSetting.speed.base,
-        recovery: this.pitcherSetting.recovery.base
+        recovery: this.pitcherSetting.recovery.base,
+        average: '.' + this.pitcherSetting.average
       }
       this.pitcherParam.forEach(elm => {
         template[elm] = 'C'
@@ -205,10 +251,6 @@ export default {
     },
     ruleErrors () {
       let errors = []
-      // タイプのチェック
-      let starterNum = 0
-      let relieverNum = 0
-      let closerNum = 0
 
       // スピードのチェック
       let speedPoint = 0
@@ -233,19 +275,8 @@ export default {
         obj.num = 0
         return obj
       })
-      this.pitcherData.forEach(elm => {
-        switch (elm.type) {
-          case 1 :
-            starterNum++
-            break
-          case 2 :
-            relieverNum++
-            break
-          case 3 :
-            closerNum++
-            break
-        }
 
+      this.pitcherData.forEach(elm => {
         speedPoint += elm.speed - this.pitcherSetting.speed.base
         speedRules.forEach(rule => {
           if (rule.min && rule.min <= elm.speed) {
@@ -270,23 +301,6 @@ export default {
           }
         })
       })
-
-      let typeError = {
-        description: ''
-      }
-      if (starterNum !== this.pitcherSetting.type.starter) {
-        typeError.description += `先発は${this.pitcherSetting.type.starter}人です。`
-      }
-      if (relieverNum !== this.pitcherSetting.type.reliever) {
-        typeError.description += `中継ぎは${this.pitcherSetting.type.reliever}人です。`
-      }
-      if (closerNum !== this.pitcherSetting.type.closer) {
-        typeError.description += `抑えは${this.pitcherSetting.type.closer}人です。`
-      }
-      if (typeError.description !== '') {
-        typeError.title = 'メンバーを修正してください'
-        errors.push(typeError)
-      }
 
       if (speedPoint !== this.pitcherSetting.speed.point) {
         let error = {
@@ -334,7 +348,7 @@ export default {
       if (recoverPoint !== this.pitcherSetting.recovery.point) {
         let error = {
           title: '回復を修正してください',
-          description: `${this.pitcherSetting.speed.point}ポイントを回復に振り分けます。`
+          description: `${this.pitcherSetting.recovery.point}ポイントを回復値に振り分けます。`
         }
         if (recoverPoint < this.pitcherSetting.recovery.point) {
           error.description += `残り${this.pitcherSetting.recovery.point - recoverPoint}ポイントです。`
@@ -351,16 +365,65 @@ export default {
             title: '回復を修正してください'
           }
           if (rule.min) {
-            error.description = `${rule.min}以上の回復を指定できるのは${rule.limit}人までです（現在${rule.num}人）。`
+            error.description = `回復値${rule.min}以上を指定できるのは${rule.limit}人までです（現在${rule.num}人）。`
           }
           if (rule.equal) {
-            error.description = `${rule.equal}の回復を指定できるのは${rule.limit}人までです（現在${rule.num}人）。`
+            error.description = `回復値${rule.equal}を指定できるのは${rule.limit}人までです（現在${rule.num}人）。`
           }
           errors.push(error)
         }
       })
 
       return errors
+    },
+    score () {
+      const maxPoint = 6 * 12
+      const points = {
+        S: 6,
+        A: 5,
+        B: 4,
+        C: 3,
+        D: 2,
+        E: 1
+      }
+      let score = {
+        sharpness: {
+          label: '切れ',
+          point: 0
+        },
+        control: {
+          label: '制球',
+          point: 0
+        },
+        stability: {
+          label: '安定',
+          point: 0
+        },
+        characteristics: {
+          label: '球質',
+          point: 0
+        },
+        skill: {
+          label: '投球術',
+          point: 0
+        },
+        stamina: {
+          label: 'スタミナ',
+          point: 0
+        }
+      }
+      const params = this.pitcherParam
+
+      this.pitcherData.forEach(elm => {
+        const self = elm
+        params.forEach(item => {
+          score[item].point += points[self[item]]
+        })
+      })
+      Object.keys(score).forEach(item => {
+        score[item].per = 0 | (score[item].point / maxPoint * 100)
+      })
+      return score
     }
   },
   methods: {
@@ -371,14 +434,17 @@ export default {
       registerPitcherData: 'REGISTER_PITCHER_DATA'
     }),
     formatMembers () {
-      const members = this.pitcherSetting.type
-      let memberNum = 0
-      Object.keys(members).forEach(elm => {
-        memberNum += members[elm]
-      })
+      const setting = this.pitcherSetting
       const template = this.dataTemplate
-      this.pitcherData = Array.from(Array(memberNum).keys()).map(i => {
+      // ラベル用に展開
+      let positions = []
+      setting.positions.forEach(elm => {
+        const labels = Array.from(Array(elm.num).keys()).map(() => elm.label)
+        positions.push(...labels)
+      })
+      this.pitcherData = Array.from(Array(setting.member).keys()).map(i => {
         let data = Object.assign({}, template)
+        data.position = positions[i]
         data.name = randName()
         return data
       })

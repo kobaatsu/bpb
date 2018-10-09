@@ -1,9 +1,19 @@
 export default {
-  type: {
-    starter: 6,
-    reliever: 4,
-    closer: 2
-  }, // 人数
+  member: 12,
+  positions: [
+    {
+      label: '先発',
+      num: 6
+    },
+    {
+      label: '中継ぎ',
+      num: 4
+    },
+    {
+      label: '抑え',
+      num: 2
+    }
+  ],
   paramLimit: { // 各パラメータの数
     S: 1,
     A: 10,
@@ -43,5 +53,6 @@ export default {
         limit: 2
       }
     ]
-  }
+  },
+  average: 200
 }
